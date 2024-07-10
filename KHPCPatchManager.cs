@@ -53,11 +53,21 @@ public class KHPCPatchManager
     };
     private static readonly Dictionary<string, string[]> KhFiles = new()
     {
-        { "KH1", KH1Files },
-        { "KH2", KH2Files },
-        { "BBS", BBSFiles },
-        { "DDD", DDDFiles },
-        { "COM", COMFiles },
+        {
+            "KH1", KH1Files
+        },
+        {
+            "KH2", KH2Files
+        },
+        {
+            "BBS", BBSFiles
+        },
+        {
+            "DDD", DDDFiles
+        },
+        {
+            "COM", COMFiles
+        },
     };
 
     private static readonly List<string> PatchType = new();
@@ -65,7 +75,7 @@ public class KHPCPatchManager
     private static string _version = "";
 
     private const string MultiplePatchTypesSelected = "You have selected different types of patches (meant for different games)!";
-    
+
 
     //[STAThread]
     private static void Main(string[] args)
@@ -419,72 +429,74 @@ public class KHPCPatchManager
         _selPatchButton = new();
         _applyPatchButton = new();
         _backupOption = new();
-        
-		UpdateResources();
-		_guiDisplayed = true;
-		//var handle = GetConsoleWindow();
-		var KHFolder = GetKHFolder();
-		var patchFiles = new string[]{};
-		var f = new Window($"KHPCPatchManager {_version}");
-		//f.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
-		f.Resize(350, 300);
-		//f.MinimumSize = new System.Drawing.Size(350, 300);
+
+        UpdateResources();
+        _guiDisplayed = true;
+        //var handle = GetConsoleWindow();
+        var KHFolder = GetKHFolder();
+        var patchFiles = new string[]
+        {
+        };
+        var f = new Window($"KHPCPatchManager {_version}");
+        //f.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        f.Resize(350, 300);
+        //f.MinimumSize = new System.Drawing.Size(350, 300);
 
         var panel = new VBox();
         f.Add(panel);
         panel.Halign = Align.Fill;
         panel.Valign = Align.Fill;
-        
+
         var menu = new MenuBar();
         panel.Add(menu);
-		
-		_status.Text = "";
+
+        _status.Text = "";
         panel.Add(_status);
-        
-		var patch = new Label();
-		patch.Text = "Patch: ";
-		//patch.AutoSize = true;
+
+        var patch = new Label();
+        patch.Text = "Patch: ";
+        //patch.AutoSize = true;
         panel.Add(patch);
-		
-		var optionsItem = new MenuItem("Options");
+
+        var optionsItem = new MenuItem("Options");
         menu.Add(optionsItem);
 
         var optionsMenu = new Menu();
         optionsItem.Submenu = optionsMenu;
-		
-		var backupOption = new CheckMenuItem();
-		backupOption.Label = "Backup PKG";
-		backupOption.Active = true;
-		//backupOption.Activated += (s,e) => backupOption.Checked = !backupOption.Checked;
+
+        var backupOption = new CheckMenuItem();
+        backupOption.Label = "Backup PKG";
+        backupOption.Active = true;
+        //backupOption.Activated += (s,e) => backupOption.Checked = !backupOption.Checked;
         optionsMenu.Add(backupOption);
-		
-		var extractOption = new CheckMenuItem();
-		extractOption.Label = "Extract patch before applying";
-		extractOption.Active = false;
-		//extractOption.Click += (s,e) => extractOption.Checked = !extractOption.Checked;
+
+        var extractOption = new CheckMenuItem();
+        extractOption.Label = "Extract patch before applying";
+        extractOption.Active = false;
+        //extractOption.Click += (s,e) => extractOption.Checked = !extractOption.Checked;
         optionsMenu.Add(extractOption);
-		
-		var aboutItem = new MenuItem("?");
+
+        var aboutItem = new MenuItem("?");
         menu.Add(aboutItem);
 
         var aboutMenu = new Menu();
         aboutItem.Submenu = aboutMenu;
-		
-		var helpOption = new MenuItem();
-		helpOption.Label = "About";
-		helpOption.Activated += (s,e) => 
+
+        var helpOption = new MenuItem();
+        helpOption.Label = "About";
+        helpOption.Activated += (s, e) =>
         {
-			var f2 = new Window("About - " + f.Title);
-			f2.Resize(450, 370);
-			//f2.MinimumSize = new System.Drawing.Size(450, 370);
-			//f2.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			var wb = new WebView();
-			//wb.Dock = DockStyle.Fill;
-			//wb.AutoSize = true;
-			//wb.Size = new Size(f2.Width, f2.Height);
+            var f2 = new Window("About - " + f.Title);
+            f2.Resize(450, 370);
+            //f2.MinimumSize = new System.Drawing.Size(450, 370);
+            //f2.Icon = Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var wb = new WebView();
+            //wb.Dock = DockStyle.Fill;
+            //wb.AutoSize = true;
+            //wb.Size = new Size(f2.Width, f2.Height);
             wb.Halign = Align.Fill;
             wb.Valign = Align.Fill;
-			//wb.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom;
+            //wb.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom;
             wb.LoadHtml("<html style='font-family:calibri;overflow:hidden;width:97%;background-color: rgb(255,255,255" + @")'><div style='width:100%;text-align:center;'>
 					Tool made by <b>AntonioDePau</b><br>
                     GTK# rewrite by <b>Frozenreflex</b><br>
@@ -502,35 +514,35 @@ public class KHPCPatchManager
 				</div>
 				</html>");
             /*
-			wb.Navigating += (s,e) => {
-				e.Cancel = true;
-				Process.Start(e.Url.ToString());
-			};
-			*/
-			f2.Add(wb);
-			
-			//f2.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-			//f2.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			//f2.ResumeLayout(false);
-			f2.ShowAll();
-		};
+            wb.Navigating += (s,e) => {
+                e.Cancel = true;
+                Process.Start(e.Url.ToString());
+            };
+            */
+            f2.Add(wb);
+
+            //f2.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            //f2.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            //f2.ResumeLayout(false);
+            f2.ShowAll();
+        };
         aboutMenu.Add(helpOption);
-		
-		_selPatchButton.Label = "Select Patch";
+
+        _selPatchButton.Label = "Select Patch";
         panel.Add(_selPatchButton);
-		
+
         /*
-		selPatchButton.Location = new Point(
-			f.ClientSize.Width / 2 - selPatchButton.Size.Width / 2, 25);
-			*/
-		//selPatchButton.Anchor = AnchorStyles.Top;
+        selPatchButton.Location = new Point(
+            f.ClientSize.Width / 2 - selPatchButton.Size.Width / 2, 25);
+            */
+        //selPatchButton.Anchor = AnchorStyles.Top;
         _selPatchButton.Valign = Align.Start;
         _selPatchButton.Halign = Align.Center;
-		
-		_selPatchButton.Clicked += (s,e) =>
+
+        _selPatchButton.Clicked += (s, e) =>
         {
-            using var openFileDialog = new FileChooserDialog("Patch", f, FileChooserAction.Open, "Cancel",ResponseType.Cancel,
-                "Open",ResponseType.Accept);
+            using var openFileDialog = new FileChooserDialog("Patch", f, FileChooserAction.Open, "Cancel", ResponseType.Cancel,
+                "Open", ResponseType.Accept);
             openFileDialog.SetCurrentFolder(Directory.GetCurrentDirectory());
             //openFileDialog.Filter = "KH pcpatch files (*.*pcpatch)|*.*pcpatch|All files (*.*)|*.*";
             //openFileDialog.RestoreDirectory = true;
@@ -539,20 +551,20 @@ public class KHPCPatchManager
             var result = openFileDialog.Run();
 
             if (result is not ((int)ResponseType.Accept or (int)ResponseType.Ok or (int)ResponseType.Yes or (int)ResponseType.Apply)) return;
-            
+
             openFileDialog.Hide();
-            
+
             //Get the path of specified file
             //MessageBox.Show(openFileDialog.FileName);
             patchFiles = openFileDialog.Filenames;
             foreach (var t in patchFiles)
             {
-                var ext = Path.GetExtension(t).Replace("pcpatch", "").Replace(".","");
+                var ext = Path.GetExtension(t).Replace("pcpatch", "").Replace(".", "");
                 PatchType.Add(ext.ToUpper());
             }
             if (PatchType.Distinct().ToList().Count == 1)
             {
-                if(patchFiles.Length>1) patchFiles = ReorderPatches(patchFiles);
+                if (patchFiles.Length > 1) patchFiles = ReorderPatches(patchFiles);
                 patch.Text = "Patch" + (patchFiles.Length > 1
                     ? "es: " + patchFiles.Aggregate((x, y) => Path.GetFileNameWithoutExtension(x) + ", " + Path.GetFileNameWithoutExtension(y))
                     : ": " + Path.GetFileNameWithoutExtension(patchFiles[0]));
@@ -564,21 +576,21 @@ public class KHPCPatchManager
                 _applyPatchButton.Sensitive = false;
             }
         };
-		
-		_applyPatchButton.Label = "Apply Patch";
-		panel.Add(_applyPatchButton);
-		/*
-		applyPatchButton.Location = new Point(
-			f.ClientSize.Width / 2 - applyPatchButton.Size.Width / 2, 50);
-		applyPatchButton.Anchor = AnchorStyles.Top;
-		*/
+
+        _applyPatchButton.Label = "Apply Patch";
+        panel.Add(_applyPatchButton);
+        /*
+        applyPatchButton.Location = new Point(
+            f.ClientSize.Width / 2 - applyPatchButton.Size.Width / 2, 50);
+        applyPatchButton.Anchor = AnchorStyles.Top;
+        */
         _applyPatchButton.Valign = Align.Start;
         _applyPatchButton.Halign = Align.Center;
-		_applyPatchButton.Sensitive = false;
-		
-		_applyPatchButton.Clicked += (s,e) => 
+        _applyPatchButton.Sensitive = false;
+
+        _applyPatchButton.Clicked += (s, e) =>
         {
-			if (!Directory.Exists(KHFolder) || PatchType[0] == "DDD")
+            if (!Directory.Exists(KHFolder) || PatchType[0] == "DDD")
             {
                 using var folderBrowserDialog = new FileChooserDialog("a", f, FileChooserAction.SelectFolder);
                 //folderBrowserDialog.Description = "Could not find the installation path for Kingdom Hearts on this PC or found an ambiguity!\nPlease browse for the \"Epic Games\\KH_1.5_2.5\" or \"Steam\\steamapps\\common\\KINGDOM HEARTS -HD 1.5+2.5 ReMIX-\" (or \"2.8\" for DDD) folder.";
@@ -586,7 +598,7 @@ public class KHPCPatchManager
                 var result = folderBrowserDialog.Run();
 
                 if (result is not ((int)ResponseType.Accept or (int)ResponseType.Ok or (int)ResponseType.Yes or (int)ResponseType.Apply)) return;
-                
+
                 var temp = GetKHFolder(Path.Combine(folderBrowserDialog.CurrentFolder, "Image"));
                 if (Directory.Exists(temp))
                 {
@@ -604,19 +616,19 @@ public class KHPCPatchManager
             }
             else
             {
-				_selPatchButton.Sensitive = false;
-				_applyPatchButton.Sensitive = false;
-				backupOption.Sensitive = false;
-				ApplyPatch(patchFiles.ToList(), PatchType[0], KHFolder, backupOption.Active, extractOption.Active);
-			}
-		};
+                _selPatchButton.Sensitive = false;
+                _applyPatchButton.Sensitive = false;
+                backupOption.Sensitive = false;
+                ApplyPatch(patchFiles.ToList(), PatchType[0], KHFolder, backupOption.Active, extractOption.Active);
+            }
+        };
         /*
-		f.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-		f.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-		f.ResumeLayout(false);
-		ShowWindow(handle, SW_HIDE);
-		*/
-		f.ShowAll();
+        f.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+        f.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+        f.ResumeLayout(false);
+        ShowWindow(handle, SW_HIDE);
+        */
+        f.ShowAll();
         Application.Run();
     }
 
@@ -630,43 +642,43 @@ public class KHPCPatchManager
 
         var panel = new VBox();
         f.Add(panel);
-    		
+
         var label = new Label();
         label.Text = "Click on a patch and drag it to change its position in the list:";
         //label.AutoSize = true;
         panel.Add(label);
-    		
+
         var lb = new ListBox();
         //lb.AllowDrop = true;
         //lb.AutoSize = true;
-        panel.Add(lb);		
-    		
+        panel.Add(lb);
+
         var ListBoxItems = new BindingList<ListBoxItem>();
-            foreach (var t in patchFiles) ListBoxItems.Add(new ListBoxItem(Path.GetFileNameWithoutExtension(t), t));
+        foreach (var t in patchFiles) ListBoxItems.Add(new ListBoxItem(Path.GetFileNameWithoutExtension(t), t));
         foreach (var item in ListBoxItems)
         {
             var row = new ListBoxRow();
         }
-        
+
         //lb.text
         /*
         lb.DataSource = ListBoxItems;
         lb.DisplayMember = "ShortName";
         lb.ValueMember = "Path";
-    		
+
         lb.MouseDown += (s,e) => {
             if(lb.SelectedItem == null) return;
             lb.DoDragDrop(lb.SelectedItem, DragDropEffects.Move);
         };
         */
-        
+
         /*
         lb.DragOver += (s,e) => {
             e.Effect = DragDropEffects.Move;
         };
         */
-        
-        lb.DragDrop += (s,e) => 
+
+        lb.DragDrop += (s, e) =>
         {
             /*
             Point point = lb.PointToClient(new Point(e.X, e.Y));
@@ -677,9 +689,9 @@ public class KHPCPatchManager
             ListBoxItems.Insert(index, data);
             */
         };
-        		
+
         //lb.Location = new Point(0, 15);
-        		
+
         Button confirm = new Button();
         confirm.Label = "Confirm";
         /*
@@ -690,7 +702,7 @@ public class KHPCPatchManager
         confirm.Valign = Align.Start;
         confirm.Halign = Align.Center;
         panel.Add(confirm);
-        confirm.Clicked += (s,e) => 
+        confirm.Clicked += (s, e) =>
         {
             /*
             f.Close();
@@ -699,7 +711,7 @@ public class KHPCPatchManager
             }
             */
         };
-        		
+
         //f.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
         //f.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
         //f.ResumeLayout(false);
